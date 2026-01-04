@@ -13,7 +13,7 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       automatic_enable = true,
-      ensure_installed = { "ts_ls", "rust_analyzer" },
+      ensure_installed = { "ts_ls", "rust_analyzer","prisma_language_server" },
     },
   },
 
@@ -36,7 +36,7 @@ return {
         end,
       })
 
-      local servers = { "ts_ls", "rust_analyzer","biome" }
+      local servers = { "ts_ls", "rust_analyzer","biome","prisma_language_server" }
 
       for _, server in ipairs(servers) do
         vim.lsp.config(server, {

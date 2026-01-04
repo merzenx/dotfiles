@@ -5,6 +5,12 @@ local set = vim.opt
 set.relativenumber = true
 set.number = true
 
+--encoding
+set.encoding = 'utf-8'
+set.fileencoding = 'utf-8'
+
+--editor
+set.guifont = "JetBrainsMonoNerdFontMono:h10"
 
 -- indentation and tabs
 set.tabstop = 4
@@ -25,7 +31,7 @@ set.signcolumn = "yes"
 set.cursorline = true
 
 -- 80th column
-set.colorcolumn = "80"
+-- set.colorcolumn = "80"
 
 -- clipboard
 set.clipboard:append("unnamedplus")
