@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# --- Configuration ---
+GEMINI_MODEL="gemini-2.5-flash"
+GEMINI_PROMPT="Generate a concise, descriptive commit message based on the following diff:"
+COMMIT_MSG_FILE="/tmp/GIT_COMMIT_MSG_TEMP.$$"
+
+# --- Stage all changes ---
+echo "⚙️ Staging all changes (git add .)..."
+git add .
+
+# --- Check for staged files ---
+added_files=$(git diff --cached --name-only)
+if [ -z "$added_files" ]; then
+  echo "⚠️ No changes to commit. Aborting."
+  exit 1
+fi
+echo "📄 Files staged for commit:"
+echo "$added_files"
+echo "---"
+
+# --- Interactive Commit Message Generation and Editing ---
+while true; do
+  echo "🤖 Generating commit message using Gemini ($GEMINI_MODEL)..."
+  
+  # 1. Generate commit message
+  commit_msg=$(git diff --cached | gemini --model "$GEMINI_MODEL" -p "$GEMINI_PROMPT")
+
+  # 2. Save the generated message to a temporary file
+  echo "$commit_msg" > "$COMMIT_MSG_FILE"
+  echo "" >> "$COMMIT_MSG_FILE"
+  echo "# --- Instructions ---" >> "$COMMIT_MSG_FILE"
+  echo "# Edit the commit message above." >> "$COMMIT_MSG_FILE"
+  echo "# Save and close Vim. The script will then ask for Y/N/R." >> "$COMMIT_MSG_FILE"
+  echo "# Lines starting with '#' will be ignored." >> "$COMMIT_MSG_FILE"
+
+  # 3. Open Vim for user editing
+  echo "✏️ Opening Vim for editing the generated message..."
+  vim "$COMMIT_MSG_FILE"
+  
+  # 4. Read the final message (Strip comments and empty lines)
+  FINAL_COMMIT_MSG=$(grep -vE '^\s*#|^\s*$' "$COMMIT_MSG_FILE")
+
+  # 5. Check if the final message is empty
+  if [ -z "$FINAL_COMMIT_MSG" ]; then
+    echo "❌ Commit message is empty after editing. Retrying generation..."
+    continue # Regenerate and re-edit
+  fi
+  
+  # 6. Show the final message and prompt for Y/N/R in the terminal
+  echo "---"
+  echo "📄 Final Commit Message (After Editing):"
+  echo "--------------------------------------------------"
+  echo "$FINAL_COMMIT_MSG"
+  echo "--------------------------------------------------"
+  
+  read -r -p "🚀 Commit with this message? (y/N/R to Regenerate/Re-edit): " choice
+  
+  # Convert input to lowercase
+  choice=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
+
+  if [[ "$choice" == "y" || "$choice" == "yes" ]]; then
+    # Commit with the content of the temporary file (-F flag)
+    echo "✅ Committing changes..."
+    git commit -F "$COMMIT_MSG_FILE"
+    
+    if [ $? -eq 0 ]; then
+      echo "🎉 Commit successful!"
+    else
+      echo "❌ Commit failed!"
+    fi
+    rm -f "$COMMIT_MSG_FILE" # Clean up temp file
+    break # Exit the loop and the script
+    
+  elif [[ "$choice" == "r" || "$choice" == "regenerate" ]]; then
+    echo "🔄 Regenerating commit message..."
+    # Loop continues to step 1 (Generate new message)
+    
+  else
+    # Default is 'N' or any other input
+    echo "🛑 Aborting commit process."
+    rm -f "$COMMIT_MSG_FILE" # Clean up temp file
+    exit 1 # Exit the script
+  fi
+done
