@@ -29,10 +29,6 @@ while true; do
   # 2. Save the generated message to a temporary file
   echo "$commit_msg" > "$COMMIT_MSG_FILE"
   echo "" >> "$COMMIT_MSG_FILE"
-  echo "# --- Instructions ---" >> "$COMMIT_MSG_FILE"
-  echo "# Edit the commit message above." >> "$COMMIT_MSG_FILE"
-  echo "# Save and close Vim. The script will then ask for Y/N/R." >> "$COMMIT_MSG_FILE"
-  echo "# Lines starting with '#' will be ignored." >> "$COMMIT_MSG_FILE"
 
   # 3. Open Vim for user editing
   echo "✏️ Opening Vim for editing the generated message..."
