@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GEMINI_MODEL="gemini-2.5-flash"
-GEMINI_PROMPT="Generate a concise, descriptive git commit message in plain text only. No markdown, no bullets, no formatting."
+#MODEL="grok-fast-1"
+PROMPT="Generate a concise, descriptive git commit message in plain text only. No markdown, no bullets, no formatting."
 
 COMMIT_MSG_FILE=$(mktemp /tmp/GIT_COMMIT_MSG_XXXXXX)
 trap "rm -f $COMMIT_MSG_FILE" EXIT
@@ -37,11 +37,11 @@ REGENERATE=true
 
 while true; do
   if $REGENERATE; then
-    echo "Generating commit message using Gemini ($GEMINI_MODEL)..."
+    echo "Generating commit message using Grok ($MODEL)..."
 
     commit_msg=$(
       git diff --cached \
-      | gemini --model "$GEMINI_MODEL" -p "$GEMINI_PROMPT" \
+      | opencode run "$PROMPT" \
       | strip_markdown \
       | sed '/^$/d' \
       | head -n 1
