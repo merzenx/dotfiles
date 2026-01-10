@@ -1,67 +1,95 @@
 #!/bin/bash
 
-# --- Configuration ---
 GEMINI_MODEL="gemini-2.5-flash"
-GEMINI_PROMPT="Generate a concise, descriptive commit message based on the following diff:"
-COMMIT_MSG_FILE="/tmp/GIT_COMMIT_MSG_TEMP.$$"
+GEMINI_PROMPT="Generate a concise, descriptive git commit message in plain text only. No markdown, no bullets, no formatting."
 
-echo "⚙️ Staging all changes (git add .)..."
+COMMIT_MSG_FILE=$(mktemp /tmp/GIT_COMMIT_MSG_XXXXXX)
+trap "rm -f $COMMIT_MSG_FILE" EXIT
+
+EDITOR_CMD=${EDITOR:-vim}
+
+strip_markdown() {
+  sed \
+    -e 's/^#\+ *//' \
+    -e 's/^[-*+] *//' \
+    -e 's/`//g' \
+    -e 's/\*\*//g' \
+    -e 's/\*//g' \
+    -e 's/_//g' \
+    -e 's/\[//g' \
+    -e 's/\]//g'
+}
+
+echo "Staging all changes (git add .)..."
 git add .
 
 added_files=$(git diff --cached --name-only)
 if [ -z "$added_files" ]; then
-  echo "⚠️ No changes to commit. Aborting."
-  exit 1
+  echo "No changes to commit. Aborting."
+  exit 0
 fi
-echo "📄 Files staged for commit:"
+
+echo "Files staged for commit:"
 echo "$added_files"
 echo "---"
 
+REGENERATE=true
+
 while true; do
-  echo "🤖 Generating commit message using Gemini ($GEMINI_MODEL)..."
-  
-  commit_msg=$(git diff --cached | gemini --model "$GEMINI_MODEL" -p "$GEMINI_PROMPT")
+  if $REGENERATE; then
+    echo "Generating commit message using Gemini ($GEMINI_MODEL)..."
 
-  echo "$commit_msg" > "$COMMIT_MSG_FILE"
+    commit_msg=$(
+      git diff --cached \
+      | gemini --model "$GEMINI_MODEL" -p "$GEMINI_PROMPT" \
+      | strip_markdown \
+      | sed '/^$/d' \
+      | head -n 1
+    )
 
-  echo "✏️ Opening Vim for editing the generated message..."
-  vim "$COMMIT_MSG_FILE"
-  
+    echo "$commit_msg" > "$COMMIT_MSG_FILE"
+    REGENERATE=false
+  fi
+
+  echo "Opening $EDITOR_CMD for editing the message..."
+  "$EDITOR_CMD" "$COMMIT_MSG_FILE"
+
   FINAL_COMMIT_MSG=$(grep -vE '^\s*#|^\s*$' "$COMMIT_MSG_FILE")
 
   if [ -z "$FINAL_COMMIT_MSG" ]; then
-    echo "❌ Commit message is empty after editing. Retrying generation..."
+    echo "Commit message is empty after editing. Regenerating..."
+    REGENERATE=true
     continue
   fi
-  
+
   echo "---"
-  echo "📄 Final Commit Message (After Editing):"
+  echo "Final Commit Message:"
   echo "--------------------------------------------------"
   echo "$FINAL_COMMIT_MSG"
   echo "--------------------------------------------------"
-  
-  read -r -p "🚀 Commit with this message? (y/N/R to Regenerate/Re-edit): " choice
-  
+
+  read -r -p "Commit with this message? (y/N/R to Regenerate/E to Re-edit): " choice
   choice=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
 
   if [[ "$choice" == "y" || "$choice" == "yes" ]]; then
-    echo "✅ Committing changes..."
+    echo "Committing changes..."
     git commit -F "$COMMIT_MSG_FILE"
-    
+
     if [ $? -eq 0 ]; then
-      echo "🎉 Commit successful!"
+      echo "Commit successful!"
     else
-      echo "❌ Commit failed!"
+      echo "Commit failed!"
     fi
-    rm -f "$COMMIT_MSG_FILE" 
     break
-    
+
   elif [[ "$choice" == "r" || "$choice" == "regenerate" ]]; then
-    echo "🔄 Regenerating commit message..."
-    
+    REGENERATE=true
+
+  elif [[ "$choice" == "e" || "$choice" == "re-edit" ]]; then
+    continue
+
   else
-    echo "🛑 Aborting commit process."
-    rm -f "$COMMIT_MSG_FILE" # Clean up temp file
-    exit 1 # Exit the script
+    echo "Aborting commit process."
+    exit 1
   fi
 done
