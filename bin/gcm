@@ -13,10 +13,7 @@ fi
 
 commit_msg=$(git diff --cached | opencode run "$PROMPT")
 
-echo "Proposed commit message:"
-echo "--------------------------------"
 echo "$commit_msg"
-echo "--------------------------------"
 
 read -r -p "Edit message? (y/N): " edit
 edit=$(echo "$edit" | tr '[:upper:]' '[:lower:]')
