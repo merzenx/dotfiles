@@ -1,95 +1,34 @@
 #!/bin/bash
 
-#MODEL="grok-fast-1"
-PROMPT="Generate a concise, descriptive git commit message in plain text only. No markdown, no bullets, no formatting."
-
-COMMIT_MSG_FILE=$(mktemp /tmp/GIT_COMMIT_MSG_XXXXXX)
-trap "rm -f $COMMIT_MSG_FILE" EXIT
+PROMPT="Generate exactly one git commit message line using Conventional Commits. Format: feat(scope): concise imperative summary. Scope must be a short lowercase noun inferred from the diff. Avoid vague words. Max 72 characters. Plain text only. Output nothing else."
 
 EDITOR_CMD=${EDITOR:-vim}
 
-strip_markdown() {
-  sed \
-    -e 's/^#\+ *//' \
-    -e 's/^[-*+] *//' \
-    -e 's/`//g' \
-    -e 's/\*\*//g' \
-    -e 's/\*//g' \
-    -e 's/_//g' \
-    -e 's/\[//g' \
-    -e 's/\]//g'
-}
-
-echo "Staging all changes (git add .)..."
 git add .
 
-added_files=$(git diff --cached --name-only)
-if [ -z "$added_files" ]; then
-  echo "No changes to commit. Aborting."
+if git diff --cached --quiet; then
+  echo "No changes to commit."
   exit 0
 fi
 
-echo "Files staged for commit:"
-echo "$added_files"
-echo "---"
+commit_msg=$(git diff --cached | opencode run "$PROMPT")
 
-REGENERATE=true
+echo "Proposed commit message:"
+echo "--------------------------------"
+echo "$commit_msg"
+echo "--------------------------------"
 
-while true; do
-  if $REGENERATE; then
-    echo "Generating commit message using Grok ($MODEL)..."
+read -r -p "Edit message? (y/N): " edit
+edit=$(echo "$edit" | tr '[:upper:]' '[:lower:]')
 
-    commit_msg=$(
-      git diff --cached \
-      | opencode run "$PROMPT" \
-      | strip_markdown \
-      | sed '/^$/d' \
-      | head -n 1
-    )
+if [[ "$edit" == "y" || "$edit" == "yes" ]]; then
+  tmp=$(mktemp)
+  echo "$commit_msg" > "$tmp"
+  "$EDITOR_CMD" "$tmp"
+  commit_msg=$(cat "$tmp")
+  rm -f "$tmp"
+fi
 
-    echo "$commit_msg" > "$COMMIT_MSG_FILE"
-    REGENERATE=false
-  fi
+[ -z "$commit_msg" ] && echo "Empty commit message. Aborted." && exit 1
 
-  echo "Opening $EDITOR_CMD for editing the message..."
-  "$EDITOR_CMD" "$COMMIT_MSG_FILE"
-
-  FINAL_COMMIT_MSG=$(grep -vE '^\s*#|^\s*$' "$COMMIT_MSG_FILE")
-
-  if [ -z "$FINAL_COMMIT_MSG" ]; then
-    echo "Commit message is empty after editing. Regenerating..."
-    REGENERATE=true
-    continue
-  fi
-
-  echo "---"
-  echo "Final Commit Message:"
-  echo "--------------------------------------------------"
-  echo "$FINAL_COMMIT_MSG"
-  echo "--------------------------------------------------"
-
-  read -r -p "Commit with this message? (y/N/R to Regenerate/E to Re-edit): " choice
-  choice=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
-
-  if [[ "$choice" == "y" || "$choice" == "yes" ]]; then
-    echo "Committing changes..."
-    git commit -F "$COMMIT_MSG_FILE"
-
-    if [ $? -eq 0 ]; then
-      echo "Commit successful!"
-    else
-      echo "Commit failed!"
-    fi
-    break
-
-  elif [[ "$choice" == "r" || "$choice" == "regenerate" ]]; then
-    REGENERATE=true
-
-  elif [[ "$choice" == "e" || "$choice" == "re-edit" ]]; then
-    continue
-
-  else
-    echo "Aborting commit process."
-    exit 1
-  fi
-done
+git commit -m "$commit_msg"
