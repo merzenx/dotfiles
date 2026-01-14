@@ -25,7 +25,7 @@ set.smartcase = true
 -- appearance
 set.termguicolors = true
 set.background = "dark"
-set.signcolumn = "yes"
+set.signcolumn = "number"
 set.fillchars:append({ eob = " " })
 
 -- cursor line
