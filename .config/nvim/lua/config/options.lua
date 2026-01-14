@@ -26,6 +26,7 @@ set.smartcase = true
 set.termguicolors = true
 set.background = "dark"
 set.signcolumn = "yes"
+set.fillchars:append({ eob = " " })
 
 -- cursor line
 set.cursorline = true
