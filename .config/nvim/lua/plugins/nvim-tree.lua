@@ -37,7 +37,8 @@ return {
             },
             actions = {
                 open_file = {
-                    quit_on_open = true,
+                    -- Keep tree window
+                    quit_on_open = false,
                 },
             },
         })
