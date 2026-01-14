@@ -6,7 +6,6 @@ return {
                 style = 'dark'
             }
             require('onedark').load()
-            vim.api.nvim_set_hl(0,"Normal",{bg = "none"})
 
             local lualine = require("lualine")
             if lualine then
