@@ -3,14 +3,15 @@
 return {
   'lewis6991/gitsigns.nvim',
   config = function()
+    local icons = require('config.icon')
     require('gitsigns').setup({
       signs = {
-        add          = { text = '' }, 
-        change       = { text = '' },
-        delete       = { text = '' },
-        topdelete    = { text = '' },
-        changedelete = { text = '' },
-        untracked    = { text = '' },
+        add          = { text = icons.git.add },
+        change       = { text = icons.git.change },
+        delete       = { text = icons.git.delete },
+        topdelete    = { text = icons.git.topdelete },
+        changedelete = { text = icons.git.changedelete },
+        untracked    = { text = icons.git.untracked },
       },
 
       on_attach = function(bufnr)
