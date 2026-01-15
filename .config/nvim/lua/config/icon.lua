@@ -1,8 +1,8 @@
 return {
     git = {
-        add = '+',
-        change = '~',
-        delete = '-',
+        add = '┃',
+        change = '┃',
+        delete = '┃',
         topdelete = '-',
         changedelete = '±',
         untracked = '?',
