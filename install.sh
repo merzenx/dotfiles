@@ -15,3 +15,5 @@ for item in *; do
         ln -sf "$PWD/$item" "$HOME/.config/$item"
     fi
 done
+
+hyprctl reload
