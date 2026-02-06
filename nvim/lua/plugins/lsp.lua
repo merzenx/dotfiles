@@ -13,7 +13,7 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       automatic_enable = true,
-      ensure_installed = { "ts_ls", "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss" },
+      ensure_installed = { "ts_ls", "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", "gopls" },
     },
   },
 
@@ -36,7 +36,7 @@ return {
         end,
       })
 
-      local servers = { "ts_ls", "rust_analyzer", "biome", "jsonls", "html", "cssls", "tailwindcss" }
+      local servers = { "ts_ls", "rust_analyzer", "biome", "jsonls", "html", "cssls", "tailwindcss", "gopls" }
 
       for _, server in ipairs(servers) do
         vim.lsp.config(server, {
