@@ -1,4 +1,5 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
+source ~/dotfiles/fish/functions.fish 
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
