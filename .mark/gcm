@@ -1,24 +1,59 @@
 #!/bin/bash
 
-PROMPT="Generate exactly one git commit message line using Conventional Commits. Format: feat(scope): concise imperative summary. Scope must be a short lowercase noun inferred from the diff. Avoid vague words. Max 72 characters. Plain text only. Output nothing else."
+PROMPT="Generate a git commit message following Conventional Commits specification:
+
+FORMAT:
+<type>(<scope>): <subject>
+
+[optional body]
+
+[optional footer(s)]
+
+RULES:
+- Type: feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert
+- Scope: short lowercase noun (component/module affected)
+- Subject: imperative mood, no period, max 50 chars
+- Body: wrap at 72 chars, explain what/why not how
+- Footer: BREAKING CHANGE: or Closes #123
+
+EXAMPLES:
+feat(auth): add OAuth2 login flow
+fix(parser): handle null in JSON response
+docs(readme): update installation steps
+
+Generate appropriate message based on the diff. Use body for substantial changes. Output plain text only."
 
 EDITOR_CMD=${EDITOR:-vim}
 
+# Stage all changes
 git add .
 
+# Check if there are changes to commit
 if git diff --cached --quiet; then
   echo "No changes to commit."
   exit 0
 fi
 
+# Generate commit message
+echo "Generating commit message..."
 commit_msg=$(git diff --cached | opencode run "$PROMPT")
 
+# Display generated message
+echo ""
+echo "Generated commit message:"
+echo "------------------------"
 echo "$commit_msg"
+echo "------------------------"
+echo ""
 
-read -r -p "Edit message? (y/N): " edit
-edit=$(echo "$edit" | tr '[:upper:]' '[:lower:]')
+# Prompt to edit
+read -r -p "Use this message? (Y/n/e to edit): " response
+response=$(echo "$response" | tr '[:upper:]' '[:lower:]')
 
-if [[ "$edit" == "y" || "$edit" == "yes" ]]; then
+if [[ "$response" == "n" || "$response" == "no" ]]; then
+  echo "Commit aborted."
+  exit 0
+elif [[ "$response" == "e" || "$response" == "edit" ]]; then
   tmp=$(mktemp)
   echo "$commit_msg" > "$tmp"
   "$EDITOR_CMD" "$tmp"
@@ -26,6 +61,22 @@ if [[ "$edit" == "y" || "$edit" == "yes" ]]; then
   rm -f "$tmp"
 fi
 
-[ -z "$commit_msg" ] && echo "Empty commit message. Aborted." && exit 1
+# Validate commit message
+if [ -z "$commit_msg" ] || [ "$(echo "$commit_msg" | tr -d '[:space:]')" = "" ]; then
+  echo "Empty commit message. Aborted."
+  exit 1
+fi
 
-git commit -m "$commit_msg"
+# Commit with message (handles multi-line)
+git commit -F - <<EOF
+$commit_msg
+EOF
+
+if [ $? -eq 0 ]; then
+  echo ""
+  echo "✓ Commit successful"
+else
+  echo ""
+  echo "✗ Commit failed"
+  exit 1
+fi
