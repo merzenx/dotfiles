@@ -11,3 +11,17 @@ vim.keymap.set("n", "<leader>ci", "diw")
 vim.keymap.set("n", "<leader>ee", "$")
 vim.keymap.set("n", "<leader>ww", "^")
 vim.keymap.set("n", "<leader>s", "<cmd>write<CR>")
+
+vim.g.clipboard = {
+  name = 'wl-clipboard',
+  copy = {
+    ['+'] = 'wl-copy',
+    ['*'] = 'wl-copy',
+  },
+  paste = {
+    ['+'] = 'wl-paste',
+    ['*'] = 'wl-paste',
+  },
+  cache_enabled = 0,
+}
+vim.o.clipboard = 'unnamedplus'

@@ -5,16 +5,10 @@ PROMPT="Generate a git commit message following Conventional Commits specificati
 FORMAT:
 <type>(<scope>): <subject>
 
-[optional body]
-
-[optional footer(s)]
-
 RULES:
 - Type: feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert
 - Scope: short lowercase noun (component/module affected)
 - Subject: imperative mood, no period, max 50 chars
-- Body: wrap at 72 chars, explain what/why not how
-- Footer: BREAKING CHANGE: or Closes #123
 
 EXAMPLES:
 feat(auth): add OAuth2 login flow
