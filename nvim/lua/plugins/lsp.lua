@@ -13,7 +13,7 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       automatic_enable = true,
-      ensure_installed = { "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", "gopls", "tsgo", "marksman", "yamlls", "oxlint", "eslint", "emmet_ls", "svelte", "volar" },
+      ensure_installed = { "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", "gopls", "tsgo", "marksman", "yamlls", "oxlint", "eslint", "emmet_ls", "svelte" },
     },
   },
 
@@ -66,7 +66,6 @@ return {
       vim.lsp.enable('eslint')
       vim.lsp.enable('emmet_ls')
       vim.lsp.enable('svelte')
-      vim.lsp.enable('volar')
     end,
   },
 }
