@@ -13,7 +13,7 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       automatic_enable = true,
-      ensure_installed = { "ts_ls", "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", "gopls" },
+      ensure_installed = { "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", "gopls", "tsgo", "marksman", "yamlls", "oxlint", "eslint", "emmet_ls", "svelte", "volar" },
     },
   },
 
@@ -36,15 +36,37 @@ return {
         end,
       })
 
-      local servers = { "ts_ls", "rust_analyzer", "biome", "jsonls", "html", "cssls", "tailwindcss", "gopls" }
-
-      for _, server in ipairs(servers) do
-        vim.lsp.config(server, {
-          settings = {},
-        })
-        
-        vim.lsp.enable(server)
-      end
+      vim.lsp.enable('tsgo')
+      vim.lsp.enable('rust_analyzer')
+      vim.lsp.enable('biome')
+      vim.lsp.config('jsonls', {
+        settings = {
+          json = {
+            schemas = {
+              {
+                fileMatch = { 'package.json' },
+                url = 'https://json.schemastore.org/package',
+              },
+              {
+                fileMatch = { 'biome.json' },
+                url = './node_modules/@biomejs/biome/configuration_schema.json',
+              },
+            },
+          },
+        },
+      })
+      vim.lsp.enable('jsonls')
+      vim.lsp.enable('html')
+      vim.lsp.enable('cssls')
+      vim.lsp.enable('tailwindcss')
+      vim.lsp.enable('gopls')
+      vim.lsp.enable('marksman')
+      vim.lsp.enable('yamlls')
+      vim.lsp.enable('oxlint')
+      vim.lsp.enable('eslint')
+      vim.lsp.enable('emmet_ls')
+      vim.lsp.enable('svelte')
+      vim.lsp.enable('volar')
     end,
   },
 }
