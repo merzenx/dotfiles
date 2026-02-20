@@ -13,7 +13,11 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       automatic_enable = true,
-      ensure_installed = { "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", "gopls", "tsgo", "marksman", "yamlls", "oxlint", "eslint", "emmet_ls", "svelte" },
+      ensure_installed = { 
+        "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", 
+        "gopls", "tsgo", "marksman", "yamlls", "oxlint", 
+        "eslint", "emmet_ls", "svelte" 
+      },
     },
   },
 
@@ -26,11 +30,8 @@ return {
           local opts = { noremap = true, silent = true, buffer = args.buf }
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-
           vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts) 
-
           vim.keymap.set({ 'n', 'v' }, 'ga', vim.lsp.buf.code_action, opts)
-
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
         end,
@@ -38,34 +39,30 @@ return {
 
       vim.lsp.enable('tsgo')
       vim.lsp.enable('rust_analyzer')
-      vim.lsp.enable('biome')
+
       vim.lsp.config('jsonls', {
         settings = {
           json = {
+            validate = { enable = true },
             schemas = {
               {
                 fileMatch = { 'package.json' },
                 url = 'https://json.schemastore.org/package',
-              },
-              {
-                fileMatch = { 'biome.json' },
-                url = './node_modules/@biomejs/biome/configuration_schema.json',
               },
             },
           },
         },
       })
       vim.lsp.enable('jsonls')
-      vim.lsp.enable('html')
-      vim.lsp.enable('cssls')
-      vim.lsp.enable('tailwindcss')
-      vim.lsp.enable('gopls')
-      vim.lsp.enable('marksman')
-      vim.lsp.enable('yamlls')
-      vim.lsp.enable('oxlint')
-      vim.lsp.enable('eslint')
-      vim.lsp.enable('emmet_ls')
-      vim.lsp.enable('svelte')
+
+      local other_servers = {
+        'html', 'cssls', 'tailwindcss', 'gopls', 
+        'marksman', 'yamlls', 'oxlint', 'eslint', 
+        'emmet_ls', 'svelte'
+      }
+      for _, lsp in ipairs(other_servers) do
+        vim.lsp.enable(lsp)
+      end
     end,
   },
 }
