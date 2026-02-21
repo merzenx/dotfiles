@@ -7,7 +7,7 @@ return {
         local icons = require('config.icon')
         require("nvim-tree").setup({
             view = {
-                width = 30,
+                width = 35,
                 side = "left",
             },
             renderer = {
@@ -19,15 +19,15 @@ return {
                         git = true,
                     },
                     glyphs = {
-                        git = {
-                            unstaged = 'M',
-                            staged = 'A',
-                            unmerged = 'U',
-                            renamed = 'R',
-                            untracked = '?',
-                            deleted = 'D',
-                            ignored = 'I',
-                        },
+                    git = {
+                        unstaged = '',
+                        staged = '',
+                        unmerged = '',
+                        renamed = '➜',
+                        untracked = '',
+                        deleted = '',
+                        ignored = '',
+                    },
                     },
                 },
             },

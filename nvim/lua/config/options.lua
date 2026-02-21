@@ -55,3 +55,9 @@ set.incsearch = true
 
 -- faster cursor hold
 set.updatetime = 50
+
+-- auto reload files changed on disk
+set.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+  command = "checktime",
+})
