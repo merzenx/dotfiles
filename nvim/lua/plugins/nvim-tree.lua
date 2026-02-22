@@ -35,6 +35,11 @@ return {
                 enable = true,
                 ignore = false,
             },
+            filters = {
+                dotfiles = false,
+                git_ignored = false,
+                custom = { ".git" },
+            },
             actions = {
                 open_file = {
                     quit_on_open = true,

@@ -21,7 +21,7 @@ return {
       lsp_format = "fallback",
     },
     on_format = function(buf)
-      vim.cmd("stopinsert") 
+            --vim.cmd("stopinsert") 
     end,
   },
 }

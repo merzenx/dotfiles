@@ -2,7 +2,7 @@
 local set = vim.opt
 
 --line nums
-set.relativenumber = true
+set.relativenumber = false
 set.number = true
 
 --encoding
@@ -60,4 +60,18 @@ set.updatetime = 50
 set.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   command = "checktime",
+})
+
+vim.filetype.add({
+    pattern = {
+        [".*"] = {
+            priority = -math.huge,
+            function(path, bufnr)
+                local content = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+                if content:find("bin/node") or content:find("bin/bun") or content:find("env bun") then
+                    return "javascript"
+                end
+            end,
+        },
+    },
 })
