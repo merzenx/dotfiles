@@ -20,5 +20,8 @@ return {
       timeout_ms = 500,
       lsp_format = "fallback",
     },
+    on_format = function(buf)
+      vim.cmd("stopinsert") 
+    end,
   },
 }
