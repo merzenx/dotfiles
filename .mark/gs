@@ -32,11 +32,9 @@ fi
 MAIN_BRANCH="${1:-main}"
 
 if ! git rev-parse --verify "$MAIN_BRANCH" > /dev/null 2>&1; then
-    info "Branch '$MAIN_BRANCH' not found, trying master..."
     MAIN_BRANCH="master"
-    
     if ! git rev-parse --verify "$MAIN_BRANCH" > /dev/null 2>&1; then
-        error "Main branch not found. Specify branch name: ./git-sync.sh [branch_name]"
+        error "Main branch not found."
     fi
 fi
 
@@ -45,26 +43,34 @@ info "Using main branch: $MAIN_BRANCH"
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$CURRENT_BRANCH" = "$MAIN_BRANCH" ]; then
-    warning "Already on $MAIN_BRANCH. Pulling latest updates..."
+    warning "Already on $MAIN_BRANCH. Pulling updates..."
     git pull origin "$MAIN_BRANCH"
     success "Updated $MAIN_BRANCH"
     exit 0
 fi
 
-info "Current branch: $CURRENT_BRANCH"
-
+HAS_CHANGES=false
 if ! git diff-index --quiet HEAD --; then
-    error "Uncommitted changes detected. Please commit or stash first"
+    info "Saving local changes with stash..."
+    git stash push -m "Auto-stash before sync"
+    HAS_CHANGES=true
 fi
 
-info "Fetching latest updates..."
-git fetch origin
+info "Fetching and Rebasing on $MAIN_BRANCH..."
 
-info "Syncing $CURRENT_BRANCH from $MAIN_BRANCH..."
+git fetch origin "$MAIN_BRANCH"
 
-git rebase "origin/$MAIN_BRANCH"
+if ! git rebase "origin/$MAIN_BRANCH"; then
+    warning "Conflict detected! Please resolve conflicts manually."
+    exit 1
+fi
 
-info "Pushing changes..."
+info "Pushing safely..."
 git push origin "$CURRENT_BRANCH" --force-with-lease
 
-success "✨ Sync completed! Branch '$CURRENT_BRANCH' is now in sync with '$MAIN_BRANCH'"
+if [ "$HAS_CHANGES" = true ]; then
+    info "Restoring local changes..."
+    git stash pop
+fi
+
+success "✨ Sync completed! '$CURRENT_BRANCH' is now updated."
