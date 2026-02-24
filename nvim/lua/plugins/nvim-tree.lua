@@ -38,7 +38,7 @@ return {
             filters = {
                 dotfiles = false,
                 git_ignored = false,
-                custom = { ".git" },
+                custom = { "^.git$" },
             },
             actions = {
                 open_file = {
