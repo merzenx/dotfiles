@@ -27,9 +27,9 @@ return {
 				fg = '#f8fbff',
 				bold = true
 			})
-			vim.api.nvim_set_hl(1, 'Statusline', {
-				-- bg = '#9dc2ff',
-				-- fg = '#181825',
+			vim.api.nvim_set_hl(0, 'Statusline', {
+				bg = '#9dc2ff',
+				fg = '#181825',
 			})
 			vim.api.nvim_set_hl(0, 'LineNr', { fg = '#969ba2' })
 			vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#cbdeff', bold = true })
