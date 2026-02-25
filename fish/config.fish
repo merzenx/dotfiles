@@ -1,5 +1,5 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
-
+source (dirname (status filename))/functions/just.fish
 
 # opencode
 fish_add_path /home/mark/.opencode/bin
@@ -17,3 +17,4 @@ end
 
 # npm
 set -gx PATH (npm config get prefix)/bin $PATH
+
