@@ -1,8 +1,9 @@
-source /usr/share/cachyos-fish-config/cachyos-config.fish
-source (dirname (status filename))/functions/just.fish
+source (dirname (status filename))/functions/alias.fish
 
 # opencode
 fish_add_path /home/mark/.opencode/bin
+
+set -U fish_greeting ""
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
@@ -19,4 +20,4 @@ end
 set -gx PATH (npm config get prefix)/bin $PATH
 
 #oh my posh
-oh-my-posh init fish --config /home/mark/.cache/oh-my-posh/themes/catppuccin_frappe.omp.json | source
+~/.local/bin/oh-my-posh init fish --config /home/mark/.cache/oh-my-posh/themes/catppuccin_frappe.omp.json | source
