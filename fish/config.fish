@@ -18,3 +18,5 @@ end
 # npm
 set -gx PATH (npm config get prefix)/bin $PATH
 
+#oh my posh
+oh-my-posh init fish --config /home/mark/.cache/oh-my-posh/themes/catppuccin_frappe.omp.json | source

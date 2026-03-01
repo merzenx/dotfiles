@@ -1,5 +1,12 @@
 DOTFILES_DIR := `pwd`
 
+tools:
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+    sudo pacman -S lazygit github-cli neovim vim keyd yay paru flatpak
+
+keyd:
+    ln -sfn {{DOTFILES_DIR}}/etc/keyd/default.conf /etc/keyd/default.conf
+
 fish:
     ln -sfn {{DOTFILES_DIR}}/fish ~/.config/fish
 
@@ -22,4 +29,4 @@ mark:
     ln -sfn {{DOTFILES_DIR}}/.mark ~/.mark
 
 # Link all configs
-link: fish nvim hypr kitty tmux lazygit mark
+link: fish nvim hypr kitty tmux lazygit mark keyd
