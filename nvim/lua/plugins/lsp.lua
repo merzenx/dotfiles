@@ -15,7 +15,7 @@ return {
       automatic_enable = true,
       ensure_installed = { 
         "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", 
-        "gopls", "tsgo", "marksman", "yamlls", "oxlint", 
+        "tsgo", "marksman", "yamlls", "oxlint", 
         "eslint", "emmet_ls", "svelte", "taplo", "biome"
       },
     },

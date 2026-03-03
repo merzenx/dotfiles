@@ -13,7 +13,11 @@ return {
                         ["<C-j>"] = actions.move_selection_next,                        
                         ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist, 
                     }
-                }
+                },
+                file_ignore_patterns = {
+                    ".*%.lock$",
+                    ".*%.lock.json$",
+                },
             }
         })
 
