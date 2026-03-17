@@ -25,8 +25,11 @@ tmux:
 lazygit:
     ln -sfn {{DOTFILES_DIR}}/lazygit ~/.config/lazygit
 
+opencode:
+    ln -sfn {{DOTFILES_DIR}}/opencode ~/.config/opencode
+
 mark:
     ln -sfn {{DOTFILES_DIR}}/.mark ~/.mark
 
 # Link all configs
-link: fish nvim hypr kitty tmux lazygit mark keyd
+link: fish nvim hypr kitty tmux lazygit mark keyd opencode
