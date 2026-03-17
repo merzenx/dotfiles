@@ -2,6 +2,10 @@ function j
     just $argv
 end
 
+function gm
+    git commit -m $argv
+end
+
 function gstart
     set branch_name $argv[1]
     if test -z "$branch_name"

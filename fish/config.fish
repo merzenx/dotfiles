@@ -5,6 +5,14 @@ fish_add_path /home/mark/.opencode/bin
 
 set -U fish_greeting ""
 
+function fish_prompt
+    set -l last_status $status
+
+    ~/projects/OxideShell/target/release/OxideShell --path (prompt_pwd)
+    
+    echo -n " "
+end
+
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
@@ -20,4 +28,4 @@ end
 set -gx PATH (npm config get prefix)/bin $PATH
 
 #oh my posh
-~/.local/bin/oh-my-posh init fish --config /home/mark/.cache/oh-my-posh/themes/catppuccin_frappe.omp.json | source
+# ~/.local/bin/oh-my-posh init fish --config /home/mark/.cache/oh-my-posh/themes/catppuccin_frappe.omp.json | source

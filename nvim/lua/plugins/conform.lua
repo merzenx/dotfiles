@@ -1,27 +1,28 @@
-return {
-  "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo" },
-  opts = {
-    formatters_by_ft = {
-      javascript = { "biome" },
-      typescript = { "biome" },
-      javascriptreact = { "biome" },
-      typescriptreact = { "biome" },
-      json = { "biome" },
-      jsonc = { "biome" },
-      css = { "biome" },
-      html = { "biome" },
-      svelte = { "biome" },
-      rust = { "rustfmt" },
-      toml = { "tombi" },
-    },
-    format_on_save = {
-      timeout_ms = 500,
-      lsp_format = "fallback",
-    },
-    on_format = function(buf)
-            --vim.cmd("stopinsert") 
-    end,
-  },
-}
+return {}
+-- return {
+--   "stevearc/conform.nvim",
+--   event = { "BufWritePre" },
+--   cmd = { "ConformInfo" },
+--   opts = {
+--     formatters_by_ft = {
+--       javascript = { "biome" },
+--       typescript = { "biome" },
+--       javascriptreact = { "biome" },
+--       typescriptreact = { "biome" },
+--       json = { "biome" },
+--       jsonc = { "biome" },
+--       css = { "biome" },
+--       html = { "biome" },
+--       svelte = { "biome" },
+--       rust = { "rustfmt" },
+--       toml = { "tombi" },
+--     },
+--     format_on_save = {
+--       timeout_ms = 500,
+--       lsp_format = "fallback",
+--     },
+--     on_format = function(buf)
+--             --vim.cmd("stopinsert") 
+--     end,
+--   },
+-- }
