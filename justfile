@@ -5,7 +5,7 @@ tools:
     sudo pacman -S lazygit github-cli neovim vim keyd yay paru flatpak
 
 keyd:
-    ln -sfn {{DOTFILES_DIR}}/etc/keyd/default.conf /etc/keyd/default.conf
+    sudo ln -sfn {{DOTFILES_DIR}}/etc/keyd/default.conf /etc/keyd/default.conf
 
 fish:
     ln -sfn {{DOTFILES_DIR}}/fish ~/.config/fish
@@ -31,5 +31,10 @@ opencode:
 mark:
     ln -sfn {{DOTFILES_DIR}}/.mark ~/.mark
 
+niri:
+    ln -sfn {{DOTFILES_DIR}}/niri ~/.config/niri
+
 # Link all configs
-link: fish nvim hypr kitty tmux lazygit mark keyd opencode
+link: fish nvim hypr kitty tmux lazygit mark keyd opencode niri
+
+install: link
