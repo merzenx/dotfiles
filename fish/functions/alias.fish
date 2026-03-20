@@ -53,3 +53,15 @@ function gdone
         echo "Warning: Branch '$branch_name' not fully merged. Use 'git branch -D' to force delete."
     end
 end
+
+# eza functions
+function ls; eza -al --color=always --group-directories-first --icons $argv; end
+function la; eza -a --color=always --group-directories-first --icons $argv; end
+function ll; eza -l --color=always --group-directories-first --icons $argv; end
+function lt; eza -aT --color=always --group-directories-first --icons $argv; end
+function l.; eza -a $argv | grep -e '^\.'; end
+
+function fe -d "Fuzzy search files and list with eza"
+    fd --type f --strip-cwd-prefix --hidden --exclude .git | fzf --preview 'eza -l --color=always --icons {}'
+end
+

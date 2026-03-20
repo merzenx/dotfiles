@@ -21,3 +21,5 @@ set -gx PATH (npm config get prefix)/bin $PATH
 
 #oh my posh
 ~/.local/bin/oh-my-posh init fish --config $HOME/dotfiles/mark.omp.json | source
+
+set -U fish_user_paths ~/.cargo/bin $fish_user_paths
