@@ -65,3 +65,5 @@ function fe -d "Fuzzy search files and list with eza"
     fd --type f --strip-cwd-prefix --hidden --exclude .git | fzf --preview 'eza -l --color=always --icons {}'
 end
 
+function z; __zoxide_z $argv; end
+function zi; __zoxide_zi $argv; end

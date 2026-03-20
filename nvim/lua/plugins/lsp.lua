@@ -16,7 +16,7 @@ return {
       ensure_installed = { 
         "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", 
         "tsgo", "marksman", "yamlls", "oxlint", 
-        "eslint", "emmet_ls", "svelte", "taplo", "biome"
+        "eslint", "emmet_ls", "svelte", "taplo"
       },
     },
   },
@@ -58,7 +58,7 @@ return {
       local other_servers = {
         'html', 'cssls', 'tailwindcss', 'gopls', 
         'marksman', 'yamlls', 'oxlint', 'eslint', 
-        'emmet_ls', 'svelte', 'taplo', "biome"
+        'emmet_ls', 'svelte', 'taplo'
       }
       for _, lsp in ipairs(other_servers) do
         vim.lsp.enable(lsp)

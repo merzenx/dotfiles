@@ -1,4 +1,5 @@
 source (dirname (status filename))/functions/alias.fish
+source (dirname (status filename))/functions/zoxide.fish
 
 # opencode
 fish_add_path $HOME/.opencode/bin
@@ -23,3 +24,5 @@ set -gx PATH (npm config get prefix)/bin $PATH
 ~/.local/bin/oh-my-posh init fish --config $HOME/dotfiles/mark.omp.json | source
 
 set -U fish_user_paths ~/.cargo/bin $fish_user_paths
+
+# zoxide init fish | source  # disabled: uses 'alias' incompatible with this fish version

@@ -279,3 +279,5 @@ include "dms/cursor.kdl"
 include "basicsettings.kdl" // Added by niri-settings
 
 include "keybinds.kdl" // Added by niri-settings
+
+include "dms/windowrules.kdl"
