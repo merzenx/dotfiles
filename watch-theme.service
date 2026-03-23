@@ -1,0 +1,12 @@
+[Unit]
+Description=Watch DMS colors and sync themes
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=%h/dotfiles/watch-theme.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
