@@ -2,6 +2,15 @@ function j
     just $argv
 end
 
+function t
+    tmux $argv
+end
+
+function ta
+    tmux a
+end
+
+
 function gm
     git commit -m $argv
 end
@@ -55,8 +64,8 @@ function gdone
 end
 
 # eza functions
-function ls; eza -al --color=always --group-directories-first --icons $argv; end
-function la; eza -a --color=always --group-directories-first --icons $argv; end
+function ls; eza -al --color=always --group-directories-first --icons --git $argv; end
+function la; eza -a --color=always --group-directories-first --icons --git $argv; end
 function ll; eza -l --color=always --group-directories-first --icons $argv; end
 function lt; eza -aT --color=always --group-directories-first --icons $argv; end
 function l.; eza -a $argv | grep -e '^\.'; end

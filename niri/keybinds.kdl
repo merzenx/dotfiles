@@ -1,4 +1,5 @@
 // keybinds managed by niri-settings. Consider moving existing binds here.
 binds {
     Mod+B hotkey-overlay-title="Google Chrome" { spawn "google-chrome-stable"; }
+    Mod+C hotkey-overlay-title="QML Dialog" { spawn "qs" "-p" "/home/mark/projects/dev-tools/windows_dialog.qml"; }
 }

@@ -25,4 +25,6 @@ set -gx PATH (npm config get prefix)/bin $PATH
 
 set -U fish_user_paths ~/.cargo/bin $fish_user_paths
 
+fastfetch
+
 # zoxide init fish | source  # disabled: uses 'alias' incompatible with this fish version
