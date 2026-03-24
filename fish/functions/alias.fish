@@ -10,6 +10,14 @@ function ta
     tmux a
 end
 
+function l70
+    if test -z "$branch_name"
+        echo "Error: Please specify a command. Usage: l70 <command>"
+        return 1
+    end
+
+    systemd-run --scope --user --property CPUQuota=70% $arvs
+end
 
 function gm
     git commit -m $argv

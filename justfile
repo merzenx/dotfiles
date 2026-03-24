@@ -1,10 +1,14 @@
 DOTFILES_DIR := `pwd`
 
+tmux:
+    ln -sfn {{DOTFILES_DIR}}/.tmux.conf ~/.tmux.conf
+
 tools:
     curl -s https://ohmyposh.dev/install.sh | bash -s
     sudo pacman -S lazygit github-cli neovim vim keyd yay paru flatpak
 
 keyd:
+    sudo mkdir -p /etc/keyd
     sudo ln -sfn {{DOTFILES_DIR}}/etc/keyd/default.conf /etc/keyd/default.conf
 
 fish:
@@ -19,9 +23,6 @@ hypr:
 kitty:
     ln -sfn {{DOTFILES_DIR}}/kitty ~/.config/kitty
 
-tmux:
-    ln -sfn {{DOTFILES_DIR}}/.tmux.conf ~/.tmux.conf
-
 lazygit:
     ln -sfn {{DOTFILES_DIR}}/lazygit ~/.config/lazygit
 
@@ -34,7 +35,6 @@ mark:
 niri:
     ln -sfn {{DOTFILES_DIR}}/niri ~/.config/niri
 
-# Link all configs
-link: fish nvim hypr kitty tmux lazygit mark keyd opencode niri
+link: tmux fish nvim hypr kitty lazygit mark keyd opencode niri
 
 install: link
