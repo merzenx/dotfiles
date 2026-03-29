@@ -8,5 +8,5 @@ echo "watching $DMS_COLORS for changes.."
 
 while true; do
   inotifywait -q -e modify,close_write,moved_to "$DMS_COLORS" 2>/dev/null
-  "$DOTFILES/scripts/sync-theme.sh"
+  "$DOTFILES/scripts/sync-all-themes.sh"
 done

@@ -8,7 +8,7 @@ echo "installing inotify-tools.."
 sudo pacman -S --needed --noconfirm inotify-tools
 
 echo "running initial theme sync.."
-"$DOTFILES/scripts/sync-all-theme.sh"
+"$DOTFILES/scripts/sync-all-themes.sh"
 
 echo "installing systemd user service.."
 mkdir -p ~/.config/systemd/user

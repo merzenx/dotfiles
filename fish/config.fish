@@ -27,4 +27,7 @@ set -U fish_user_paths ~/.cargo/bin $fish_user_paths
 
 fastfetch
 
+set -g fish_ambiguous_width 1
+set -g fish_emoji_width 2
+
 # zoxide init fish | source  # disabled: uses 'alias' incompatible with this fish version

@@ -23,16 +23,16 @@ set.ignorecase = true
 set.smartcase = true
 
 -- appearance
-set.termguicolors = true
-set.background = "dark"
-set.signcolumn = "yes"
+--set.termguicolors = false
+-- set.background = "dark"
+-- set.signcolumn = "yes"
 set.fillchars:append({ eob = " " })
 
 -- cursor line
 set.cursorline = true
 
 -- 80th column
--- set.colorcolumn = "80"
+set.colorcolumn = "80"
 
 -- clipboard
 set.clipboard:append("unnamedplus")

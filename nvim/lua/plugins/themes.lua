@@ -1,4 +1,4 @@
-local theme = require('config.theme')
+-- local theme = require('config.theme')
 --
 -- vim.cmd('hi clear')
 -- if vim.fn.exists('syntax_on') then vim.cmd('syntax reset') end
@@ -22,7 +22,6 @@ return {
         config = function()
             require('lualine').setup({
                 options = {
-                    theme = 'dank16',
                     component_separators = { left = '', right = ''},
                     section_separators = { left = '', right = ''},
                 },

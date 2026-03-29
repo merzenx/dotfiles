@@ -14,20 +14,20 @@ return {
                 icons = {
                     show = {
                         file = true,
-                        folder = true,
+                        folder = false,
                         folder_arrow = true,
                         git = true,
                     },
                     glyphs = {
-                    git = {
-                        unstaged = '',
-                        staged = '',
-                        unmerged = '',
-                        renamed = '➜',
-                        untracked = '',
-                        deleted = '',
-                        ignored = '',
-                    },
+                        git = {
+                            unstaged = '',
+                            staged = '',
+                            unmerged = '',
+                            renamed = '➜',
+                            untracked = '',
+                            deleted = 'D',
+                            ignored = 'I',
+                        },
                     },
                 },
             },
@@ -42,7 +42,7 @@ return {
             },
             actions = {
                 open_file = {
-                    quit_on_open = true,
+                    quit_on_open = false,
                 },
             },
         })

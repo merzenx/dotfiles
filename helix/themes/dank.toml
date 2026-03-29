@@ -1,0 +1,126 @@
+# Helix theme - Dank Material Shell
+# Generated from dms-colors.json
+
+[palette]
+d_bg = "#101417"
+d_surface = "#101417"
+d_surface2 = "#1c2024"
+d_surface3 = "#262a2e"
+d_surface4 = "#353a3d"
+d_fg = "#dfe3e7"
+d_fg1 = "#c1c7ce"
+d_muted = "#8b9198"
+d_primary = "#92cef5"
+d_primary_c = "#004c6c"
+d_secondary = "#b6c9d8"
+d_tertiary = "#ccc1e9"
+d_error = "#ffb4ab"
+d_c0 = "#101417"
+d_c1 = "#ff729e"
+d_c2 = "#7af589"
+d_c3 = "#fff672"
+d_c4 = "#77bce8"
+d_c5 = "#1d5071"
+d_c6 = "#92cef5"
+d_c7 = "#eff8ff"
+d_c8 = "#939a9f"
+d_c9 = "#ff9fbd"
+d_c10 = "#a5ffb0"
+d_c11 = "#fff9a5"
+d_c12 = "#a7dcff"
+d_c13 = "#b6e2ff"
+d_c14 = "#d0ecff"
+d_c15 = "#f8fcff"
+
+# UI
+"ui.background" = { bg = "d_bg" }
+"ui.text" = "d_fg"
+"ui.text.focus" = { fg = "d_fg", modifiers = ["bold"] }
+"ui.text.info" = "d_muted"
+"ui.virtual.whitespace" = "d_muted"
+"ui.virtual.ruler" = { bg = "d_surface" }
+"ui.virtual.indent-guide" = "d_surface3"
+"ui.virtual.inlay-hint" = { fg = "d_muted", modifiers = ["italic"] }
+"ui.cursor" = { fg = "#000000", bg = "#fdfff8" }
+"ui.cursor.match" = { fg = "#000000", bg = "d_c3", modifiers = ["bold"] }
+"ui.cursor.primary" = { fg = "#000000", bg = "#fdfff8" }
+"ui.cursor.secondary" = { fg = "#000000", bg = "d_secondary" }
+"ui.cursor.insert" = { fg = "#000000", bg = "#fdfff8" }
+"ui.cursor.select" = { fg = "#000000", bg = "d_primary" }
+"ui.selection" = { bg = "d_primary_c" }
+"ui.cursorline.primary" = { bg = "d_surface2" }
+"ui.cursorline.secondary" = { bg = "d_surface2" }
+"ui.linenr" = "d_muted"
+"ui.linenr.selected" = "d_fg"
+"ui.statusline" = { fg = "d_fg", bg = "d_surface2" }
+"ui.statusline.inactive" = { fg = "d_muted", bg = "d_surface" }
+"ui.statusline.normal" = { fg = "d_surface", bg = "d_primary", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "d_surface", bg = "d_secondary", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "d_surface", bg = "d_tertiary", modifiers = ["bold"] }
+"ui.popup" = { fg = "d_fg", bg = "d_surface2" }
+"ui.popup.info" = { fg = "d_fg", bg = "d_surface2" }
+"ui.window" = { fg = "d_surface3", bg = "d_bg" }
+"ui.help" = { fg = "d_fg", bg = "d_surface2", modifiers = ["bold"] }
+"ui.bufferline" = { fg = "d_muted", bg = "d_surface" }
+"ui.bufferline.active" = { fg = "d_fg", bg = "d_surface2", modifiers = ["bold"] }
+"ui.bufferline.background" = { bg = "d_surface" }
+"ui.menu" = { fg = "d_fg", bg = "d_surface2" }
+"ui.menu.selected" = { fg = "#000000", bg = "d_primary" }
+"ui.menu.scroll" = { fg = "d_muted", bg = "d_surface2" }
+"ui.gutter" = {}
+
+# Diagnostics
+"diagnostic.error" = { fg = "d_error", modifiers = ["undercurl"] }
+"diagnostic.warning" = { fg = "d_c3", modifiers = ["undercurl"] }
+"diagnostic.info" = { fg = "d_c6", modifiers = ["undercurl"] }
+"diagnostic.hint" = { fg = "d_primary", modifiers = ["undercurl"] }
+"warning" = "d_c3"
+"error" = "d_error"
+"info" = "d_c6"
+"hint" = "d_primary"
+
+# Diff
+"diff.plus" = "d_c10"
+"diff.minus" = "d_c1"
+"diff.delta" = "d_c3"
+
+# Syntax
+"comment" = { fg = "d_c8", modifiers = ["italic"] }
+"keyword" = "d_primary"
+"operator" = "d_fg"
+"punctuation" = "d_fg"
+"variable" = "d_fg"
+"variable.builtin" = "d_secondary"
+"variable.parameter" = "d_c12"
+"variable.other" = "d_fg"
+"variable.other.member" = "d_fg"
+"constant" = "d_secondary"
+"constant.numeric" = "d_c13"
+"constant.character" = "d_c9"
+"constant.character.escape" = "d_primary"
+"constant.builtin" = "d_secondary"
+"string" = "d_c10"
+"string.regexp" = "d_primary"
+"string.special" = "d_primary"
+"function" = "d_primary"
+"function.builtin" = "d_primary"
+"function.macro" = "d_secondary"
+"constructor" = "d_secondary"
+"tag" = "d_primary"
+"namespace" = "d_secondary"
+"special" = "d_secondary"
+"type" = "d_tertiary"
+"type.builtin" = "d_tertiary"
+"attribute" = "d_secondary"
+"module" = "d_secondary"
+"label" = "d_primary"
+"escape" = "d_primary"
+
+# Markup
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.heading" = { fg = "d_primary", modifiers = ["bold"] }
+"markup.list" = "d_primary"
+"markup.link" = "d_secondary"
+"markup.quote" = { fg = "d_c8", modifiers = ["italic"] }
+"markup.raw" = "d_c10"
