@@ -79,3 +79,64 @@ end
 
 function z; __zoxide_z $argv; end
 function zi; __zoxide_zi $argv; end
+
+
+# --- Rust & sccache Configuration (Fish version) ---
+
+function setup-rust-sccache
+    if type -q sccache
+        set -gx RUSTC_WRAPPER (type -p sccache)
+        set -gx SCCACHE_DIR "$HOME/.cache/sccache"
+        set -gx SCCACHE_CACHE_SIZE "5G"
+
+        if not test -d "$SCCACHE_DIR"
+            mkdir -p "$SCCACHE_DIR"
+        end
+
+        set -l CARGO_CONFIG "$HOME/.cargo/config.toml"
+        if not test -d "$HOME/.cargo"
+            mkdir -p "$HOME/.cargo"
+        end
+
+        if not test -f "$CARGO_CONFIG"; or not grep -q "rustc-wrapper" "$CARGO_CONFIG"
+            echo "🔧 Configuring Cargo to use sccache..."
+            printf "\n[build]\nrustc-wrapper = \"%s\"\n" (type -p sccache) >> "$CARGO_CONFIG"
+            echo "✅ Cargo config updated."
+        end
+    else
+        echo "⚠️ sccache not found. Install it via: cargo install sccache"
+    end
+end
+
+setup-rust-sccache
+
+# --- Rclone Sync Functions ---
+
+function rust-cache-pull
+    echo "🔄 Pulling sccache from cloud..."
+    rclone sync "gdrive:rust_cache/sccache" "$SCCACHE_DIR" --progress
+    echo "✅ Pull complete."
+end
+
+function rust-cache-push
+    if mountpoint -q "$SCCACHE_DIR"
+        echo "⚠️ Found rclone mount on $SCCACHE_DIR. Unmounting..."
+        fusermount -u "$SCCACHE_DIR"; or sudo umount -l "$SCCACHE_DIR"
+    end
+
+    echo "🛑 Stopping sccache server..."
+    sccache --stop-server >/dev/null 2>&1
+
+    echo "🚀 Syncing local sccache to cloud..."
+    rclone sync "$SCCACHE_DIR" "gdrive:rust_cache/sccache" \
+        --fast-list \
+        --progress \
+        --transfers 8 \
+        --checkers 16
+
+    echo "✅ Sync complete. sccache is safely stored."
+    
+    sccache --start-server >/dev/null 2>&1
+end
+
+abbr -a rs-stat 'sccache --show-stats'

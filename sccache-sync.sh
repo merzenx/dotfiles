@@ -22,20 +22,3 @@ EOF
         echo "⚠️ sccache not found. Please install it first (e.g., cargo install sccache)"
     fi
 }
-
-setup-rust-sccache
-
-rust-cache-pull() {
-    echo "🔄 Pulling sccache from cloud..."
-    rclone sync "grive_remote:my_rust_cache/sccache" "$SCCACHE_DIR" --progress
-    echo "✅ Pull complete."
-}
-
-rust-cache-push() {
-    echo "🛑 Stopping sccache server..."
-    sccache --stop-server >/dev/null 2>&1
-    echo "🚀 Syncing sccache to cloud..."
-    rclone sync "$SCCACHE_DIR" "grive_remote:my_rust_cache/sccache" --fast-list --progress
-    echo "✅ Sync complete."
-    sccache --start-server >/dev/null 2>&1
-}
