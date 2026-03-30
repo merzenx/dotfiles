@@ -7,12 +7,12 @@
         }
     },
     "display": {
-        "separator": "│ ",
+        "separator": " │ ",
     },
     "modules": [
         {
             "type": "os",
-            "key": " ",
+            "key": "󰣇 ",
             "keyColor": "cyan",
         },
         {

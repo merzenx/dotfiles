@@ -106,14 +106,13 @@ layout {
     background-color "transparent"
     // Hyprland-like: center focused column for split-screen feel
     center-focused-column "always"
-    // Preset widths: split like Hyprland (half, third, two-thirds)
+    //
     preset-column-widths {
-        proportion 0.33333
         proportion 0.5
-        proportion 0.66667
+        proportion 0.333
     }
-    // Default new windows to 50% width (like Hyprland split)
     default-column-width { proportion 0.5; }
+
     // If you leave the brackets empty, the windows themselves will decide their initial width.
     // default-column-width {}
     // By default focus ring and border are rendered as a solid background rectangle

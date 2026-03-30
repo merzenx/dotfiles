@@ -10,7 +10,7 @@ set.encoding = 'utf-8'
 set.fileencoding = 'utf-8'
 
 --editor
-set.guifont = "JetBrainsMonoNerdFontMono:h10,FiraCodeCodeNerdFont:h10"
+set.guifont = "JetBrainsMonoNerdFontMono:8,FiraCodeCodeNerdFont:h8"
 
 -- indentation and tabs
 set.tabstop = 4
