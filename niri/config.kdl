@@ -99,19 +99,21 @@ layout {
 
         border {
             off 
-            width 1
+            width 2
         }
 
     // Set gaps around windows in logical pixels.
     background-color "transparent"
     // Hyprland-like: center focused column for split-screen feel
-    center-focused-column "always"
+    center-focused-column "never"
     //
     preset-column-widths {
-        proportion 0.5
-        proportion 0.333
+        proportion 0.33333 
+        proportion 0.5    
+        proportion 0.66667 
     }
-    default-column-width { proportion 0.5; }
+
+    default-column-width { proportion 0.33333; }
 
     // If you leave the brackets empty, the windows themselves will decide their initial width.
     // default-column-width {}
@@ -135,7 +137,7 @@ layout {
     }
 }
 window-rule {
-    opacity 0.97
+    opacity 0.98
 }
 window-rule {
     match app-id="zen"
