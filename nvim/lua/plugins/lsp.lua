@@ -16,7 +16,7 @@ return {
       ensure_installed = { 
         "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", 
         "tsgo", "marksman", "yamlls", "oxlint", 
-        "eslint", "emmet_ls", "svelte", "taplo", "clangd"
+        "eslint", "emmet_ls", "svelte", "taplo", "clangd", "gopls"
       },
     },
   },
