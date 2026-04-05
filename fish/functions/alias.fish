@@ -113,28 +113,44 @@ setup-rust-sccache
 # --- Rclone Sync Functions ---
 
 function rust-cache-pull
-    echo "🔄 Pulling sccache from cloud..."
-    rclone sync "gdrive:rust_cache/sccache" "$SCCACHE_DIR" --progress
-    echo "✅ Pull complete."
+    set -l cache_zip "/tmp/sccache_backup.7z"
+
+    echo "🔄 Downloading zipped cache from cloud..."
+    rclone copy "gdrive:rust_cache/sccache_backup.7z" "/tmp/" --progress
+
+    if test -f $cache_zip
+        echo "📂 Unzipping cache to $SCCACHE_DIR..."
+
+        rm -rf "$SCCACHE_DIR/*"
+        7z x $cache_zip -o"$SCCACHE_DIR" -y >/dev/null
+
+        echo "✅ Pull and Install complete."
+        rm -f $cache_zip
+    else
+        echo "❌ Error: Cache file not found on cloud."
+    end
 end
 
 function rust-cache-push
+    set -l cache_zip "/tmp/sccache_backup.7z"
+
     if mountpoint -q "$SCCACHE_DIR"
-        echo "⚠️ Found rclone mount on $SCCACHE_DIR. Unmounting..."
+        echo "⚠️ Found rclone mount. Unmounting..."
         fusermount -u "$SCCACHE_DIR"; or sudo umount -l "$SCCACHE_DIR"
     end
 
     echo "🛑 Stopping sccache server..."
     sccache --stop-server >/dev/null 2>&1
 
-    echo "🚀 Syncing local sccache to cloud..."
-    rclone sync "$SCCACHE_DIR" "gdrive:rust_cache/sccache" \
-        --fast-list \
-        --progress \
-        --transfers 8 \
-        --checkers 16
+    echo "📦 Compressing cache with 7z..."
 
-    echo "✅ Sync complete. sccache is safely stored."
+    rm -f $cache_zip
+    7z a $cache_zip "$SCCACHE_DIR/*" -mx1
+
+    echo "🚀 Uploading zipped cache to cloud..."
+    rclone copy $cache_zip "gdrive:rust_cache/" --progress
+
+    echo "✅ Push complete. sccache is safely stored."
     
     sccache --start-server >/dev/null 2>&1
 end
