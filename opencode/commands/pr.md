@@ -19,7 +19,6 @@ Generate a professional PR following these constraints:
 - **Title:** Under 60 characters. Use conventional prefixes (e.g., `feat:`, `fix:`, `chore:`). 
   - *Example:* `fix: prevent UI freezing during API timeouts`
 - **Body:** - **Summary:** A 1-2 sentence explanation of **WHY** these changes were made from a user perspective.
-  - **Technical Updates:** A bulleted list of key technical changes (the **WHAT**).
 
 ### 3. Execution
 Use the `bash` tool to execute:

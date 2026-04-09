@@ -31,3 +31,6 @@ set -g fish_ambiguous_width 1
 set -g fish_emoji_width 2
 
 # zoxide init fish | source  # disabled: uses 'alias' incompatible with this fish version
+
+# Added by trek installer
+fish_add_path "/home/mark/.trek/bin"

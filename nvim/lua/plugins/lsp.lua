@@ -40,6 +40,17 @@ return {
       vim.lsp.enable('tsgo')
       vim.lsp.enable('rust_analyzer')
 
+      vim.lsp.config('rust_analyzer', {
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              defaultFeature = "dev",
+              allFeatures = true,
+            },
+          },
+        },
+      })
+
       vim.lsp.config('jsonls', {
         settings = {
           json = {
