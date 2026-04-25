@@ -18,6 +18,10 @@ function gm
     git commit -m $argv
 end
 
+function cg
+    cargo $argv
+end
+
 function gstart
     set branch_name $argv[1]
     if test -z "$branch_name"
@@ -108,7 +112,7 @@ function setup-rust-sccache
     end
 end
 
-setup-rust-sccache
+# setup-rust-sccache
 
 # --- Rclone Sync Functions ---
 

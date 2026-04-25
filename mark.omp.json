@@ -53,6 +53,16 @@
           "type": "git"
         },
         {
+          "foreground": "#906cff",
+          "properties": {
+            "display_mode": "environment",
+            "fetch_virtual_env": true
+          },
+          "style": "plain",
+          "template": "\uE235 {{ .Venv }} ",
+          "type": "python"
+        },
+        {
           "style": "plain",
           "foreground": "p:closer",
           "template": "\uf105",

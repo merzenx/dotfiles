@@ -14,9 +14,10 @@ return {
     opts = {
       automatic_enable = true,
       ensure_installed = { 
-        "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss", 
-        "tsgo", "marksman", "yamlls", "oxlint", 
-        "eslint", "emmet_ls", "svelte", "taplo", "clangd", "gopls"
+        "rust_analyzer", "jsonls", "html", "cssls", "tailwindcss",
+        "tsgo", "marksman", "yamlls", "oxlint",
+        "eslint", "emmet_ls", "svelte", "taplo", "clangd", "gopls",
+        "pyright"
       },
     },
   },
@@ -67,9 +68,9 @@ return {
       vim.lsp.enable('jsonls')
 
       local other_servers = {
-        'html', 'cssls', 'tailwindcss', 'gopls', 
-        'marksman', 'yamlls', 'oxlint', 'eslint', 
-        'emmet_ls', 'svelte', 'taplo', 'clangd'
+        'html', 'cssls', 'tailwindcss', 'gopls',
+        'marksman', 'yamlls', 'oxlint', 'eslint',
+        'emmet_ls', 'svelte', 'taplo', 'clangd', 'pyright'
       }
       for _, lsp in ipairs(other_servers) do
         vim.lsp.enable(lsp)
